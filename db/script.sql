@@ -141,7 +141,7 @@ CREATE TABLE cartoes (
 CREATE TABLE categorias (
   cat_id BIGINT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(60) NOT NULL,
-  
+
   CONSTRAINT PK_CATEGORIAS_CATID PRIMARY KEY (cat_id),
   CONSTRAINT CK_CATEGORIAS_NOME CHECK (nome IS NOT NULL AND nome != '')
 );
@@ -176,7 +176,7 @@ CREATE TABLE produtos_categoria (
 );
 
 CREATE TABLE pedidos (
-  ped_id BIGINT NOT NULL AUTO_INCREMENT,
+  ped_id BIGINT NOT NULL AUTOdata_INCREMENT,
   subtotal DECIMAL(10,2) NOT NULL,
   data_pedido DATE NOT NULL,
   data_recebimento DATE NOT NULL,
@@ -193,7 +193,6 @@ CREATE TABLE pedidos (
   CONSTRAINT FK_PEDIDOS_ENDID FOREIGN KEY (end_id) REFERENCES enderecos(end_id)
 
 );
-
 CREATE TABLE pedido_produto (
   ped_id BIGINT NOT NULL,
   prod_id BIGINT NOT NULL,

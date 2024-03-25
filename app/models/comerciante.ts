@@ -11,20 +11,28 @@ export default class Comerciante extends BaseModel {
 
   @column()
   declare razaoSocial: string
+
   @column()
   declare img_url: string
+
   @column()
   declare cnpj: string
+
   @column()
   declare ativo: boolean
+
   @column()
   declare validado: boolean
+
   @column()
   declare email: string
+
   @column()
   declare senha: string
+
   @column()
   declare valor_min_entrega: number
+
   @column()
   declare tipo: 'SUPERMERCADO' | 'HORTIFRUTI' | 'AÇOUGUE' | 'PADARIA' | 'SORVETERIA'
 

@@ -1,23 +1,21 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
-import Usuario from './usuario.js'
+import Pedido from './pedido.js'
+import Produto from './produto.js'
 
-export default class Cartao extends BaseModel {
+export default class PedidoProduto extends BaseModel {
   @column({ isPrimary: true })
-  declare car_id: bigint
+  declare ped_prod_id: bigint
+
+  @hasOne(() => Pedido)
+  declare pedido: HasOne<typeof Pedido>
+
+  @hasOne(() => Produto)
+  declare prod_id: HasOne<typeof Produto>
 
   @column()
-  declare numero: string
-
-  @column()
-  declare validade: Date
-
-  @column()
-  declare cvv: string
-
-  @hasOne(() => Usuario)
-  declare usuario: HasOne<typeof Usuario>
+  declare quantidade: number
 
   @column.dateTime({ autoCreate: true })
   declare data_criacao: DateTime
