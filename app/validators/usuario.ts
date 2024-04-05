@@ -16,8 +16,6 @@ export const criarValidator = vine.compile(
     data_mod: vine.date(),
     ativo: vine.boolean(),
     validado: vine.boolean(),
-    enderecos: vine.array(vine.string()),
-    telefones: vine.array(vine.string().minLength(14).maxLength(14)),
   })
 )
 

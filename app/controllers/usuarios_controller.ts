@@ -1,3 +1,4 @@
+import Usuario from '#models/usuario'
 import UsuarioService from '#services/usuario_service'
 import { criarValidator, findOneValidator } from '#validators/usuario'
 import { inject } from '@adonisjs/core'

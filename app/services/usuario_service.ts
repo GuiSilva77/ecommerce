@@ -1,12 +1,11 @@
 import Usuario from '#models/usuario'
-import UsuarioPayload from '../entities/payload/usuario_payload.js'
 
 export default class UsuarioService {
   async findOne(cpf: string) {
     return await Usuario.findByOrFail('cpf', cpf)
   }
 
-  async create(usuario: UsuarioPayload) {
+  async create(usuario: Partial<Usuario>) {
     return await Usuario.create(usuario)
   }
 

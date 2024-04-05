@@ -1,3 +1,5 @@
+import Usuario from '#models/usuario'
+
 export default class UsuarioPayload {
   declare nome: string
 
@@ -5,7 +7,7 @@ export default class UsuarioPayload {
 
   declare cpf: string
 
-  declare data_mod: Date
+  declare data_mod: DateTime
 
   declare ativo: boolean
 
@@ -16,4 +18,8 @@ export default class UsuarioPayload {
   declare enderecos: Array<string>
 
   declare telefones: Array<string>
+
+  toModel() {
+    return new Usuario()
+  }
 }
