@@ -12,8 +12,11 @@ export default class extends BaseSchema {
       table.string('descricao').notNullable()
       table.string('img_url').notNullable()
       table.enum('unidade', ['UN', 'KG', 'L', 'M', 'CM', 'MM']).notNullable()
-      table.dateTime('data_criacao')
-      table.dateTime('data_mod')
+      table.dateTime('data_criacao').notNullable()
+      table.dateTime('data_mod').notNullable()
+
+      table.integer('id_comerciante').unsigned().references('id_comerciante').inTable('comerciantes').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
+      table.integer('id_categoria').unsigned().references('id_categoria').inTable('categorias').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
     })
   }
 
