@@ -10,7 +10,7 @@ export default class Endereco extends BaseModel {
   declare rua: string
 
   @column()
-  declare numero: number
+  declare numero: string
 
   @column()
   declare bairro: string

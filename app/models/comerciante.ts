@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
 import Endereco from './endereco.js'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
+import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import Telefone from './telefone.js'
 import Avaliacao from './avaliacao.js'
 
@@ -13,7 +13,10 @@ export default class Comerciante extends BaseModel {
   declare razaoSocial: string
 
   @column()
-  declare img_url: string
+  declare logo_url: string
+
+  @column()
+  declare banner_url: string
 
   @column()
   declare cnpj: string
@@ -39,8 +42,8 @@ export default class Comerciante extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare data_mod: DateTime
 
-  @hasMany(() => Endereco)
-  declare enderecos: HasMany<typeof Endereco>
+  @hasOne(() => Endereco)
+  declare enderecos: HasOne<typeof Endereco>
 
   @hasMany(() => Telefone)
   declare telefones: HasMany<typeof Telefone>
