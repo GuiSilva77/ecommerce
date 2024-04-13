@@ -13,6 +13,9 @@ export default class Usuario extends BaseModel {
   declare nome: string
 
   @column()
+  declare email: string
+
+  @column()
   declare img_url: string
 
   @column()

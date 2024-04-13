@@ -9,8 +9,6 @@ export default class extends BaseSchema {
       table.string('nome').nullable()
       table.string('email', 254).notNullable().unique()
       table.string('senha').notNullable()
-      table.string('img_url').nullable()
-      table.string('cpf').notNullable()
       table.dateTime('data_mod').notNullable()
       table.boolean('ativo').notNullable().defaultTo(true)
       table.boolean('validado').notNullable().defaultTo(false)
