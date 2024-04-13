@@ -6,6 +6,7 @@ import { DateTime } from 'luxon'
 import Avaliacao from './avaliacao.js'
 
 export default class Usuario extends BaseModel {
+  static table = "usuario"
   @column({ isPrimary: true })
   declare id_usuario: bigint
 
