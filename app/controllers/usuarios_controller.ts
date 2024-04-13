@@ -1,6 +1,5 @@
-import Usuario from '#models/usuario'
 import UsuarioService from '#services/usuario_service'
-import { criarValidator, findOneValidator } from '#validators/usuario'
+import { criarValidator, encontrarValidator } from '#validators/usuario'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -9,24 +8,24 @@ export default class UsuariosController {
   constructor(protected usuarioService: UsuarioService) {}
 
   async findOne({ request }: HttpContext) {
-    const data = await request.validateUsing(findOneValidator)
-    return await this.usuarioService.findOne(data.cpf)
+    const data = await request.validateUsing(encontrarValidator)
+    return await this.usuarioService.encontrarPorCPF(data.cpf)
   }
 
   async criar({ request }: HttpContext) {
     const data = await request.validateUsing(criarValidator)
-    return await this.usuarioService.create(data)
+    return await this.usuarioService.criar(data)
   }
 
   async deletar({ request }: HttpContext) {
-    const data = await request.validateUsing(findOneValidator)
+    const data = await request.validateUsing(encontrarValidator)
 
-    return await this.usuarioService.delete(data.cpf)
+    return await this.usuarioService.deletar(data.cpf)
   }
 
   async atualizar({ request }: HttpContext) {
-    const data = await request.validateUsing(findOneValidator)
+    const data = await request.validateUsing(encontrarValidator)
 
-    return await this.usuarioService.delete(data.cpf)
+    return await this.usuarioService.deletar(data.cpf)
   }
 }
