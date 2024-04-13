@@ -2,10 +2,10 @@ import Avaliacao from '#models/avaliacao'
 import db from '@adonisjs/lucid/services/db'
 
 export default class AvaliacaoService {
-  async encontrarPorComerciante_Id(id: number, pagina: number, quantidade: number) {
+  async encontrarPorid_comerciante(id: number, pagina: number, quantidade: number) {
     return await db
       .from('avaliacoes')
-      .where('comerciante_id', String(id))
+      .where('id_comerciante', String(id))
       .orderBy('data_mod', 'desc')
       .paginate(pagina, quantidade)
   }

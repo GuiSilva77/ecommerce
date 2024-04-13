@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.string('cvv').notNullable()
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
-      table.integer('id_usuario').unsigned().references('id_usuario').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
+      table.integer('id_usuario').unsigned().references('id_usuario').inTable('usuario').onUpdate('CASCADE').onDelete('CASCADE')
     })
   }
 

@@ -14,7 +14,7 @@ export default class extends BaseSchema {
       table.dateTime('data_mod').notNullable()
 
       table.integer('endereco_entrega').unsigned().references('id_endereco').inTable('enderecos').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
-      table.integer('id_usuario').unsigned().references('id_usuario').inTable('users').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
+      table.integer('id_usuario').unsigned().references('id_usuario').inTable('usuario').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
     })
   }
 

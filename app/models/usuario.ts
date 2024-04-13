@@ -7,7 +7,7 @@ import Avaliacao from './avaliacao.js'
 
 export default class Usuario extends BaseModel {
   @column({ isPrimary: true })
-  declare usuario_id: bigint
+  declare id_usuario: bigint
 
   @column()
   declare nome: string

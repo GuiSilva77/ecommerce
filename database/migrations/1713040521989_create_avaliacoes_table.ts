@@ -10,12 +10,8 @@ export default class extends BaseSchema {
       table.string('conteudo').nullable()
       table.datetime('data_mod').notNullable()
       table.dateTime('data_criacao').notNullable()
-      table
-        .integer('comerciante_id')
-        .unsigned()
-        .references('comerciante.id_comerciante')
-        .onDelete('CASCADE')
-      table.integer('usuario_id').unsigned().references('usuario.usuario_id').onDelete('CASCADE')
+      table.integer('id_comerciante').unsigned().references('comerciantes.id_comerciante').onDelete('CASCADE')
+      table.integer('id_usuario').unsigned().references('usuario.id_usuario').onDelete('CASCADE')
     })
   }
 
