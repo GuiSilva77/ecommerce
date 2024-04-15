@@ -25,6 +25,9 @@ export default class Usuario extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare data_mod: DateTime
 
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare data_criacao: DateTime
+
   @column()
   declare ativo: boolean
 
