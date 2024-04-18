@@ -12,12 +12,14 @@ export const criarValidator = vine.compile(
     email: vine.string().email(),
     senha: vine.string().minLength(8),
     cpf: vine.string().minLength(11).maxLength(11),
-    telefones: vine.object({
-      numero: vine.string().mobile((campo) => {
-        return { locale: ['pt-BR'] }
-      }),
-      tipo: vine.enum(['CELULAR', 'FIXO']),
-    }),
+    telefones: vine.array(
+      vine.object({
+        numero: vine.string().mobile((campo) => {
+          return { locale: ['pt-BR'] }
+        }),
+        tipo: vine.enum(['CELULAR', 'FIXO']),
+      })
+    ),
   })
 )
 
