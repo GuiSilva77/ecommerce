@@ -12,13 +12,8 @@ export default class AvaliacoesController {
 
     const dadosValidados = await encontrarValidador.validate(linhaDeBusca)
 
-<<<<<<< HEAD
-    return await this.avaliacaoService.encontrarPorid_comerciante(
-      dadosValidados.id_comerciante,
-=======
     const resultado = await this.avaliacaoService.encontrarPorComerciante_Id(
       dadosValidados.comerciante_id,
->>>>>>> 45d6466048402602114d02aa4abe4f133666350b
       dadosValidados.pagina,
       dadosValidados.quantidade
     )
