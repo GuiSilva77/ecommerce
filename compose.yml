@@ -1,0 +1,13 @@
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: aldovani
+      MYSQL_DATABASE: ecommerce
+      MYSQL_USER: vendedor
+      MYSQL_PASSWORD: password
+    ports:
+      - '3306:3306'
+#    volumes:
+#      - './db/script.sql:/docker-entrypoint-initdb.d/script.sql'
+#      - './db/data:/var/lib/mysql'
