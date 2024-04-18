@@ -1,1 +1,2 @@
-import './usuario/index.js'
+import './usuarios/index.js'
+import './avaliacoes/index.js'

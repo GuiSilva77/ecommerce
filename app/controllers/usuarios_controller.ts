@@ -7,25 +7,31 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class UsuariosController {
   constructor(protected usuarioService: UsuarioService) {}
 
-  async findOne({ request }: HttpContext) {
+  async findOne({ request, response }: HttpContext) {
     const data = await request.validateUsing(encontrarValidator)
-    return await this.usuarioService.encontrarPorCPF(data.cpf)
+    const result = await this.usuarioService.encontrarPorCPF(data.cpf)
+
+    return response.ok(result)
   }
 
-  async criar({ request }: HttpContext) {
+  async criar({ request, response }: HttpContext) {
     const data = await request.validateUsing(criarValidator)
-    return await this.usuarioService.criar(data)
+    const result = await this.usuarioService.criar(data)
+
+    return response.created(result)
   }
 
-  async deletar({ request }: HttpContext) {
+  async deletar({ request, response }: HttpContext) {
     const data = await request.validateUsing(encontrarValidator)
+    const result = await this.usuarioService.deletar(data.cpf)
 
-    return await this.usuarioService.deletar(data.cpf)
+    return response.ok(result)
   }
 
-  async atualizar({ request }: HttpContext) {
+  async atualizar({ request, response }: HttpContext) {
     const data = await request.validateUsing(encontrarValidator)
+    const result = await this.usuarioService.deletar(data.cpf)
 
-    return await this.usuarioService.deletar(data.cpf)
+    return response.ok(result)
   }
 }

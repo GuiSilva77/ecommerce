@@ -14,12 +14,24 @@ export default class AvaliacaoService {
     return await Avaliacao.create(avaliacao)
   }
 
-  async atualizar(id: bigint, carga: Partial<Avaliacao>) {
-    return await Avaliacao.updateOrCreate({ ava_id: id }, carga)
+  async atualizar(id: number, carga: Partial<Avaliacao>) {
+    if (carga.ava_id) {
+      delete carga.ava_id
+    }
+
+    const avaliacao = await Avaliacao.findBy('ava_id', id)
+
+    if (!avaliacao) {
+      return null
+    }
+
+    avaliacao.merge(carga)
+
+    return await avaliacao.save()
   }
 
-  async deletar(id: bigint, carga: Partial<Avaliacao>) {
-    const avaliacao = await Avaliacao.findBy('ava_id', id)
+  async deletar(id: number) {
+    const avaliacao = await Avaliacao.findByOrFail('ava_id', id)
 
     return await avaliacao?.delete()
   }

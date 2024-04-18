@@ -1,5 +1,5 @@
 import AvaliacaoService from '#services/avaliacao_service'
-import { criarValidador, encontrarValidador } from '#validators/avaliacao'
+import { criarValidador, encontrarValidador, avaliacaoIdValidador } from '#validators/Avaliacao'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -7,27 +7,47 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class AvaliacoesController {
   constructor(protected avaliacaoService: AvaliacaoService) {}
 
-  async encontrarAvaliacoesPaginadas({ request }: HttpContext) {
+  async encontrarAvaliacoesPaginadas({ request, response }: HttpContext) {
     const linhaDeBusca = request.qs()
 
     const dadosValidados = await encontrarValidador.validate(linhaDeBusca)
 
+<<<<<<< HEAD
     return await this.avaliacaoService.encontrarPorid_comerciante(
       dadosValidados.id_comerciante,
+=======
+    const resultado = await this.avaliacaoService.encontrarPorComerciante_Id(
+      dadosValidados.comerciante_id,
+>>>>>>> 45d6466048402602114d02aa4abe4f133666350b
       dadosValidados.pagina,
       dadosValidados.quantidade
     )
+
+    return response.ok(resultado)
   }
 
-  async criarAvaliacao({ request }: HttpContext) {
+  async criarAvaliacao({ request, response }: HttpContext) {
     const dadosValidados = await request.validateUsing(criarValidador)
+    const resultado = await this.avaliacaoService.criarAvaliacao(dadosValidados)
 
-    return await this.avaliacaoService.criarAvaliacao(dadosValidados)
+    return response.created(resultado)
   }
 
-  async atualizarAvaliacao({ request }: HttpContext) {
-    const dadosValidados = await request.validateUsing(criarValidador)
+  async atualizarAvaliacao({ request, response }: HttpContext) {
+    const qs = request.qs()
 
-    return await this.avaliacaoService.atualizar(dadosValidados)
+    const id = await avaliacaoIdValidador.validate(qs)
+
+    const dadosValidados = await request.validateUsing(criarValidador)
+    const resultado = await this.avaliacaoService.atualizar(id.id, dadosValidados)
+
+    return response.ok(resultado)
+  }
+
+  async deletarAvaliacao({ request, response }: HttpContext) {
+    const id = await avaliacaoIdValidador.validate(request.qs())
+    const resultado = await this.avaliacaoService.deletar(id.id)
+
+    return response.ok(resultado)
   }
 }
