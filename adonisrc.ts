@@ -42,7 +42,7 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [() => import('#app/routes'), () => import('#start/kernel')],
+  preloads: [() => import('./app/routes/index.js'), () => import('#start/kernel')],
 
   /*
   |--------------------------------------------------------------------------

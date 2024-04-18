@@ -5,9 +5,10 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('comerciante_id').notNullable()
+      table.increments('id_comerciante').notNullable()
       table.string('razaoSocial').notNullable()
-      table.string('img_url').nullable()
+      table.string('logo_url').nullable()
+      table.string('banner_url').nullable()
       table.string('cnpj').notNullable()
       table.boolean('ativo').notNullable().defaultTo(true)
       table.boolean('validado').notNullable().defaultTo(false)
@@ -19,6 +20,8 @@ export default class extends BaseSchema {
         .notNullable()
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
+
+      table.integer('id_endereco').unsigned().references('id_endereco').inTable('enderecos').nullable().onUpdate('CASCADE').onDelete('CASCADE')
     })
   }
 

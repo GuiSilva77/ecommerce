@@ -4,6 +4,7 @@ import Usuario from './usuario.js'
 import type { Has, HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import Endereco from './endereco.js'
 import PedidoProduto from './pedido_produto.js'
+import Comerciante from './comerciante.js'
 
 export default class Pedido extends BaseModel {
   @column({ isPrimary: true })

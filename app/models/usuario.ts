@@ -7,8 +7,9 @@ import Avaliacao from './avaliacao.js'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 
 export default class Usuario extends BaseModel {
+  static table = "usuario"
   @column({ isPrimary: true })
-  declare usuario_id: bigint
+  declare id_usuario: bigint
 
   @column()
   declare nome: string
@@ -24,6 +25,9 @@ export default class Usuario extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare data_mod: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare data_criacao: DateTime
 
   @column()
   declare ativo: boolean
