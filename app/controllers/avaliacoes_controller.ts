@@ -1,5 +1,6 @@
 import AvaliacaoService from '#services/avaliacao_service'
-import { criarValidador, encontrarValidador, avaliacaoIdValidador } from '#validators/Avaliacao'
+import { criarValidador } from '#validators/Avaliacao/criar'
+import { encontrarValidador } from '#validators/Avaliacao/encontrar'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -9,10 +10,10 @@ export default class AvaliacoesController {
 
   async encontrarAvaliacoesPaginadas({ request, response }: HttpContext) {
     const linhaDeBusca = request.qs()
-
     const dadosValidados = await encontrarValidador.validate(linhaDeBusca)
+    await console.log(dadosValidados)
 
-    const resultado = await this.avaliacaoService.encontrarPorComerciante_Id(
+    const resultado = await this.avaliacaoService.encontrarPorid_comerciante(
       dadosValidados.comerciante_id,
       dadosValidados.pagina,
       dadosValidados.quantidade
@@ -29,19 +30,18 @@ export default class AvaliacoesController {
   }
 
   async atualizarAvaliacao({ request, response }: HttpContext) {
-    const qs = request.qs()
-
-    const id = await avaliacaoIdValidador.validate(qs)
+    const id = await request.param('id')
 
     const dadosValidados = await request.validateUsing(criarValidador)
-    const resultado = await this.avaliacaoService.atualizar(id.id, dadosValidados)
+    const resultado = await this.avaliacaoService.atualizar(id, dadosValidados)
 
     return response.ok(resultado)
   }
 
   async deletarAvaliacao({ request, response }: HttpContext) {
-    const id = await avaliacaoIdValidador.validate(request.qs())
-    const resultado = await this.avaliacaoService.deletar(id.id)
+    const id = await request.param('id')
+
+    const resultado = await this.avaliacaoService.deletar(id)
 
     return response.ok(resultado)
   }
