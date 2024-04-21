@@ -1,10 +1,6 @@
 import vine from '@vinejs/vine'
 
-export const encontrarValidator = vine.compile(
-  vine.object({
-    cpf: vine.string().trim().minLength(11).maxLength(11),
-  })
-)
+export const encontrarValidator = vine.compile(vine.string())
 
 export const criarValidator = vine.compile(
   vine.object({
@@ -29,7 +25,7 @@ export const atualizarValidator = vine.compile(
     email: vine.string().email().optional(),
     senha: vine.string().minLength(8).optional(),
     cpf: vine.string().minLength(11).maxLength(11).optional(),
-    enderecos: vine.array(vine.string()),
+    //enderecos: vine.array(vine.string()).optional(),
     telefones: vine
       .array(
         vine.object({

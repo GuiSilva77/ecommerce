@@ -7,7 +7,7 @@ import Avaliacao from './avaliacao.js'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 
 export default class Usuario extends BaseModel {
-  static table = "usuario"
+  static table = 'usuario'
   @column({ isPrimary: true })
   declare id_usuario: bigint
 

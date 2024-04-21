@@ -8,6 +8,14 @@ export default class extends BaseSchema {
       table.increments('id_telefone').notNullable()
       table.string('numero').notNullable()
       table.enum('tipo', ['CELULAR', 'FIXO']).notNullable()
+      table
+        .integer('usuario_id_usuario')
+        .unsigned()
+        .references('id_usuario')
+        .inTable('usuario')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.dateTime('data_mod').notNullable
       table.datetime('created_at')
     })
