@@ -25,6 +25,8 @@ export const atualizarValidator = vine.compile(
     email: vine.string().email().optional(),
     senha: vine.string().minLength(8).optional(),
     cpf: vine.string().minLength(11).maxLength(11).optional(),
+    ativo: vine.boolean().optional(),
+    validado: vine.boolean().optional(),
     //enderecos: vine.array(vine.string()).optional(),
     telefones: vine
       .array(
