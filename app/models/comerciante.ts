@@ -10,8 +10,8 @@ export default class Comerciante extends BaseModel {
   @column({ isPrimary: true })
   declare com_id: bigint
 
-  @column()
-  declare razaoSocial: string
+  @column({ columnName: 'razaoSocial' })
+  declare razao_social: string
 
   @column()
   declare logo_url: string
@@ -42,6 +42,9 @@ export default class Comerciante extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare data_mod: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare data_criacao: DateTime
 
   @hasOne(() => Endereco)
   declare enderecos: HasOne<typeof Endereco>
