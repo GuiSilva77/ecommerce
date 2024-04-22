@@ -1,11 +1,11 @@
 meta {
-  name: GET por Id
+  name: logout
   type: http
-  seq: 1
+  seq: 2
 }
 
-get {
-  url: http://localhost:3333/usuarios/6
+post {
+  url: http://localhost:3333/auth/logout
   body: none
   auth: bearer
 }
