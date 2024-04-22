@@ -3,12 +3,10 @@ import { inject } from '@adonisjs/core'
 import UsuarioPayload from '../payloads/usuarioPayload.js'
 import TelefoneService from './telefone_service.js'
 import UsuarioPutPayload from '../payloads/usuarioPutPayload.js'
-import hash from '@adonisjs/core/services/hash'
-import ResourceNotFoundException from '#exceptions/resource_not_found'
 import AlreadyExistsException from '#exceptions/already_exists_exception'
 import isValidCPF from '../utils/isValidCPF.js'
-import BadRequestException from '#exceptions/bad_request'
-import { Exception } from '@adonisjs/core/exceptions'
+import ResourceNotFoundException from '#exceptions/resource_not_found_exception'
+import BadRequestException from '#exceptions/bad_request_exception'
 
 @inject()
 export default class UsuarioService {
@@ -38,8 +36,6 @@ export default class UsuarioService {
 
     novoUsuario.ativo = true
     novoUsuario.validado = false
-
-    novoUsuario.senha = await hash.make(usuario.senha)
 
     return await Usuario.create(novoUsuario)
   }
