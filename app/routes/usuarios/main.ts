@@ -7,7 +7,7 @@
 |
 */
 
-const UsuariosController = () => import('#controllers/usuarios_controller')
+import UsuariosController from '#controllers/Usuario/Main'
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 

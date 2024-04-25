@@ -1,5 +1,4 @@
-const ProdutosController = () => import('#controllers/produtos_controller')
-
+import ProdutosController from '#controllers/Produto/Main'
 import router from '@adonisjs/core/services/router'
 
 router.get('/produtos/:id', [ProdutosController, 'encontrarProdutoPorId'])

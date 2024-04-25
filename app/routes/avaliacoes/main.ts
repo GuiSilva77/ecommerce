@@ -1,4 +1,4 @@
-const AvaliacoesController = () => import('#controllers/avaliacoes_controller')
+import AvaliacoesController from '#controllers/Avaliacao/Main'
 import router from '@adonisjs/core/services/router'
 
 router.get('/avaliacoes', [AvaliacoesController, 'encontrarAvaliacoesPaginadas'])
