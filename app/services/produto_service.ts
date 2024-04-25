@@ -1,9 +1,14 @@
+import ResourceNotFoundException from '#exceptions/resource_not_found_exception'
 import Produto from '#models/produto'
 import ProdutoPayload from '../payloads/produtoPayload.js'
 
 export default class ProdutoService {
-  async encontrarProdutoPorId(id: number) {
-    return await Produto.findByOrFail('prod_id', id)
+  async encontrarProdutoPorId(id: bigint | undefined) {
+    const produto = Produto.findBy('prod_id', id)
+
+    if (!produto) throw new ResourceNotFoundException('Produto não encontrado')
+
+    return produto
   }
 
   async encontrarProdutosPorComerciante(
@@ -12,7 +17,7 @@ export default class ProdutoService {
     quantidade: number
   ) {
     return await Produto.query()
-      .where('comerciante_id', comerciante_id)
+      .where('id_comerciante', comerciante_id)
       .paginate(pagina, quantidade)
   }
 
@@ -25,19 +30,22 @@ export default class ProdutoService {
   }
 
   async atualizarProduto(id: number, dados: ProdutoPayload) {
-    if (!(await Produto.findBy('prod_id', id))) {
-      throw new Error('Produto não encontrado')
+    const produto = await Produto.findBy('prod_id', id)
+
+    if (!produto) {
+      throw new ResourceNotFoundException('Produto não encontrado!')
     }
 
-    const produto = await Produto.findByOrFail('prod_id', id)
-
     produto.merge(dados)
+    if (dados.categorias) produto.related('categorias').updateOrCreateMany(dados.categorias)
 
-    await produto.save()
+    return await produto.save()
   }
 
   async deletarProduto(id: number) {
-    const produto = await Produto.findByOrFail('prod_id', id)
+    const produto = await Produto.findBy('prod_id', id)
+
+    if (!produto) throw new ResourceNotFoundException('Produto não Encontrado!')
 
     await produto.delete()
   }
