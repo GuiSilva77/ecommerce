@@ -55,5 +55,7 @@ export default class Usuario extends compose(BaseModel, AuthFinder) {
   @hasMany(() => Avaliacao)
   declare avaliacoes: HasMany<typeof Avaliacao>
 
-  static accessTokens = DbAccessTokensProvider.forModel(Usuario)
+  static accessTokens = DbAccessTokensProvider.forModel(Usuario, {
+    expiresIn: '30 days',
+  })
 }
