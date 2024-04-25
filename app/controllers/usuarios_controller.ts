@@ -7,8 +7,12 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class UsuariosController {
   constructor(protected usuarioService: UsuarioService) {}
 
-  async findOne({ request, response }: HttpContext) {
-    const id = request.param('id')
+  async findOne({ request, response, auth }: HttpContext) {
+    let id: bigint
+    const linhaDeBusca = request.only(['self'])
+
+    if (linhaDeBusca && linhaDeBusca.self == 'true') id = auth.getUserOrFail().id_usuario
+    else id = request.param('id')
 
     const result = await this.usuarioService.encontrarPorId(id)
 
