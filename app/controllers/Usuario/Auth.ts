@@ -3,7 +3,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 @inject()
-export default class SessaoController {
+export default class UsuarioAuthController {
   constructor(protected sessaoService: SessaoService) {}
 
   async login({ request, response }: HttpContext) {
