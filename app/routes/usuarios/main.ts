@@ -19,7 +19,7 @@ router
     router.get('/usuarios/:id', [UsuariosController, 'findOne'])
     router.delete('/usuarios/:id', [UsuariosController, 'deletar'])
     router.put('/usuarios/:id', [UsuariosController, 'atualizar'])
-    router.post('/usuarios/logout', [UsuarioAuthController, 'login'])
+    router.post('/usuarios/logout', [UsuarioAuthController, 'logout'])
   })
   .use(
     middleware.auth({
@@ -27,4 +27,4 @@ router
     })
   )
 
-router.post('/usuarios/token', [UsuarioAuthController, 'logout'])
+router.post('/usuarios/token', [UsuarioAuthController, 'login'])
