@@ -10,6 +10,12 @@ const authConfig = defineConfig({
         tokens: 'accessTokens',
         model: () => import('#models/usuario'),
       }),
+    }), 
+    comerciante: tokensGuard({
+      provider: tokensUserProvider({
+        tokens: 'accessTokens',
+        model: () => import('#models/comerciante'),
+      }),
     }),
   },
 })
