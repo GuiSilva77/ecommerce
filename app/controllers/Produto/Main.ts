@@ -18,10 +18,14 @@ export default class ProdutosController {
     const comercianteId = request.param('id')
     const linhaDeBusca = await encontrarValidador.validate(request.qs())
 
+    //const { pagina, quantidade } = request.only(['pagina', 'quantidade'])
+
     const produtos = await this.produtoService.encontrarProdutosPorComerciante(
       comercianteId,
       linhaDeBusca.pagina,
       linhaDeBusca.quantidade
+      //pagina,
+      //quantidade
     )
 
     return response.ok(produtos)
@@ -49,6 +53,6 @@ export default class ProdutosController {
 
     await this.produtoService.deletarProduto(id)
 
-    return response.noContent()
+    return response.ok({})
   }
 }

@@ -5,9 +5,17 @@ import Telefone from './telefone.js'
 import { DateTime } from 'luxon'
 import Avaliacao from './avaliacao.js'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import { withAuthFinder } from '@adonisjs/auth'
+import { compose } from '@adonisjs/core/helpers'
+import hash from '@adonisjs/core/services/hash'
 
-export default class Usuario extends BaseModel {
-  static table = "usuario"
+const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
+  uids: ['email'],
+  passwordColumnName: 'senha',
+})
+
+export default class Usuario extends compose(BaseModel, AuthFinder) {
+  static table = 'usuario'
   @column({ isPrimary: true })
   declare id_usuario: bigint
 
@@ -47,5 +55,7 @@ export default class Usuario extends BaseModel {
   @hasMany(() => Avaliacao)
   declare avaliacoes: HasMany<typeof Avaliacao>
 
-  static accessTokens = DbAccessTokensProvider.forModel(Usuario)
+  static accessTokens = DbAccessTokensProvider.forModel(Usuario, {
+    expiresIn: '30 days',
+  })
 }

@@ -26,10 +26,15 @@ export default class Produto extends BaseModel {
   @column()
   declare unidade: 'UN' | 'KG' | 'L' | 'M' | 'CM' | 'MM'
 
+  @hasOne(() => Comerciante)
+  declare comerciante: HasOne<typeof Comerciante>
+
+  @hasMany(() => Categoria)
+  declare categorias: HasMany<typeof Categoria>
+
   @column.dateTime({ autoCreate: true })
   declare data_criacao: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare data_mod: DateTime
-
 }

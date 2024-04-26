@@ -1,0 +1,26 @@
+meta {
+  name: POST
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3333/usuarios
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Guilherme Silva",
+    "email": "guilherme2@email.com",
+    "senha": "c2@r7yhe8c7hj",
+    "cpf": "",
+    "telefones": [
+      {
+        "numero": "+55561865198",
+        "tipo": "CELULAR"
+      }
+    ]
+  }
+}
