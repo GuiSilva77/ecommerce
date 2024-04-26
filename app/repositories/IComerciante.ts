@@ -15,4 +15,6 @@ export interface IComerciante {
   findById(id: number): Promise<Comerciante | null>
 
   update(payload: updateComerciante, id: number): Promise<Comerciante>
+
+  delete(id: number): Promise<void>
 }

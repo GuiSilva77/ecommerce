@@ -17,7 +17,7 @@ export default class MainComercianteController {
     return result
   }
 
-  public async index({ request }: HttpContext){
+  public async index({ request }: HttpContext) {
     const data = request.param('id')
     console.log(data)
     const id = await pesquisaComercianteValidator.validate(data)
@@ -26,15 +26,22 @@ export default class MainComercianteController {
     return result
   }
 
-  public async alterar({ request, auth }: HttpContext){
+  public async alterar({ request, auth }: HttpContext) {
     await auth.use('comerciante').authenticate()
     const comerciante = await auth.use('comerciante').user
     const data = request.body()
-    console.log(comerciante?.id_comerciante)
     const payload = await alteraComercianteValidador.validate(data)
     const result = await this.comercianteService.update(payload, comerciante?.id_comerciante!)
 
     return result
+  }
+
+  public async deletar({ request, response, auth }: HttpContext) {
+    await auth.use('comerciante').authenticate()
+    const comerciante = auth.use('comerciante').user
+    const result = await this.comercianteService.delete(comerciante?.id_comerciante!)
+
+    return response.ok(result)
   }
 }
 //cnpj 22071709000110

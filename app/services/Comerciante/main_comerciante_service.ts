@@ -10,17 +10,11 @@ type createComerciante = {
   senha: string
 }
 
-type tipoComerciante = 
-  'SUPERMERCADO'| 'HORTIFRUTI'| 'AÇOUGUE' | 'PADARIA' | 'SORVETERIA'
+type tipoComerciante = 'SUPERMERCADO' | 'HORTIFRUTI' | 'AÇOUGUE' | 'PADARIA' | 'SORVETERIA'
 
+type tipoEndereco = 'RESIDENCIAL' | 'COMERCIAL' | 'CASA' | 'TRABALHO'
 
-type tipoEndereco =
-  'RESIDENCIAL' | 'COMERCIAL' | 'CASA' | 'TRABALHO'
-
-
-type tipoTelefone = 
-  'CELULAR' | 'FIXO'
-
+type tipoTelefone = 'CELULAR' | 'FIXO'
 
 type endereco = {
   rua: string
@@ -41,7 +35,7 @@ export type updateComerciante = {
   ativo: boolean | undefined
   email: string | undefined
   valor_min_entrega: number | undefined
-  tipo: tipoComerciante | undefined  
+  tipo: tipoComerciante | undefined
   endereco: endereco | undefined
   telefone: telefone[] | undefined
 }
@@ -62,19 +56,29 @@ export default class MainComercianteService {
     return comerciante
   }
 
-  public async search(id: number){
+  public async search(id: number) {
     const comerciante = await this.ComecianteRepository.findById(id)
 
-    if (comerciante == null){
-      throw new NotFoundException("Comerciante não encontrado ou inexistente")
+    if (comerciante == null) {
+      throw new NotFoundException('Comerciante não encontrado ou inexistente')
     }
 
     return comerciante
   }
 
-  public async update(payload: updateComerciante, id: number){
+  public async update(payload: updateComerciante, id: number) {
     const comerciante = await this.ComecianteRepository.update(payload, id)
 
     return comerciante
+  }
+
+  public async delete(id: number) {
+    const comerciante = await this.ComecianteRepository.findById(id)
+
+    if (comerciante == null) {
+      throw new NotFoundException('Comerciante não encontrado ou inexistente')
+    }
+
+    await comerciante.delete()
   }
 }

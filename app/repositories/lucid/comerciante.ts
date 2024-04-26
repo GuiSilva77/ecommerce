@@ -1,5 +1,6 @@
+import ResourceNotFoundException from '#exceptions/resource_not_found_exception'
 import Comerciante from '#models/comerciante'
-import { updateComerciante } from '#services/Comerciante/main_comerciante_service';
+import { updateComerciante } from '#services/Comerciante/main_comerciante_service'
 import { IComerciante } from '../IComerciante.js'
 
 export class ComecianteLucidRepository implements IComerciante {
@@ -23,5 +24,14 @@ export class ComecianteLucidRepository implements IComerciante {
     const comerciante = await this.findById(id)
 
     return comerciante!
+  }
+  async delete(id: number): Promise<void> {
+    const comerciante = await this.findById(id)
+
+    if (comerciante == null) {
+      throw new ResourceNotFoundException('Comerciante não encontrado ou inexistente')
+    }
+
+    await comerciante.delete()
   }
 }
