@@ -1,5 +1,4 @@
 import AuthComercianteService from '#services/Comerciante/auth_comerciante_service'
-import ComercianteService from '#services/Comerciante/main_comerciante_service'
 import { AuthComercianteValidador } from '#validators/Comerciante/auth'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
