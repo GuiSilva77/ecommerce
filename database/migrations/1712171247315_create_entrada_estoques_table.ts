@@ -12,7 +12,14 @@ export default class extends BaseSchema {
       table.string('lote').notNullable()
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
-      table.integer('id_produto').unsigned().references('id_produto').inTable('produtos').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
+      table
+        .integer('id_produto')
+        .unsigned()
+        .references('id')
+        .inTable('produtos')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
     })
   }
 

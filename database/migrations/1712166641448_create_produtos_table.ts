@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_produto').notNullable()
+      table.increments('id').primary().notNullable()
       table.string('nome').notNullable()
       table.float('valor_venda').notNullable()
       table.float('valor_custo').notNullable()
@@ -15,8 +15,14 @@ export default class extends BaseSchema {
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
 
-      table.integer('id_comerciante').unsigned().references('id_comerciante').inTable('comerciantes').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
-      table.integer('id_categoria').unsigned().references('id_categoria').inTable('categorias').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
+      table
+        .integer('id_comerciante')
+        .unsigned()
+        .references('id_comerciante')
+        .inTable('comerciantes')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
     })
   }
 
