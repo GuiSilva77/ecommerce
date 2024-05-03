@@ -5,5 +5,5 @@ export default class ProdutoPutPayload {
   declare descricao: string | undefined
   declare img_url: string | undefined
   declare unidade: 'UN' | 'KG' | 'L' | 'M' | 'CM' | 'MM' | undefined
-  declare categorias: { nome: string }[] | undefined
+  declare categorias: { id_categoria: number | undefined; nome: string | undefined }[] | undefined
 }

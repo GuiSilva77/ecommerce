@@ -16,7 +16,7 @@ export default class SessaoService {
   }
 
   async logout() {
-    const id_usuario = this.ctx.auth.user?.id_usuario
+    const id_usuario = this.ctx.auth.user?.currentAccessToken.identifier
 
     const usuario = await Usuario.find(id_usuario)
     if (!usuario) {

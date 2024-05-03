@@ -1,13 +1,14 @@
 import ProdutoService from '#services/produto_service'
 import { criarValidador } from '#validators/Produto/criar'
-import { encontrarValidador } from '#validators/Produto/encontrar'
+import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
+@inject()
 export default class ProdutosController {
   constructor(protected produtoService: ProdutoService) {}
 
   async encontrarProdutoPorId({ request, response }: HttpContext) {
-    const id = request.param('id')
+    const id = parseInt(request.param('id'))
 
     const produto = await this.produtoService.encontrarProdutoPorId(id)
 
@@ -16,25 +17,23 @@ export default class ProdutosController {
 
   async encontrarProdutos({ request, response }: HttpContext) {
     const comercianteId = request.param('id')
-    const linhaDeBusca = await encontrarValidador.validate(request.qs())
 
-    //const { pagina, quantidade } = request.only(['pagina', 'quantidade'])
+    const { pagina, quantidade } = request.only(['pagina', 'quantidade'])
 
     const produtos = await this.produtoService.encontrarProdutosPorComerciante(
       comercianteId,
-      linhaDeBusca.pagina,
-      linhaDeBusca.quantidade
-      //pagina,
-      //quantidade
+      pagina,
+      quantidade
     )
 
     return response.ok(produtos)
   }
 
-  async criarProduto({ request, response }: HttpContext) {
+  async criarProduto({ request, response, auth }: HttpContext) {
     const dadosValidados = await request.validateUsing(criarValidador)
 
-    const produto = await this.produtoService.criarProduto(dadosValidados)
+    const id_comerciante: bigint | undefined = auth.user?.currentAccessToken.identifier
+    const produto = await this.produtoService.criarProduto(id_comerciante, dadosValidados)
 
     return response.created(produto)
   }
@@ -54,5 +53,13 @@ export default class ProdutosController {
     await this.produtoService.deletarProduto(id)
 
     return response.ok({})
+  }
+
+  async listarCategoria({ request, response }: HttpContext) {
+    const id = request.param('id')
+
+    const categorias = await this.produtoService.listarCategorias(id)
+
+    return response.ok(categorias)
   }
 }

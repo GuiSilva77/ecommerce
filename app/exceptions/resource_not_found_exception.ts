@@ -6,6 +6,10 @@ export default class ResourceNotFoundException extends Exception {
   static code = 'RESOURCE_NOT_FOUND'
 
   async handle(error: this, ctx: HttpContext) {
-    ctx.response.status(error.status).send(error.message)
+    ctx.response.status(error.status).send({
+      codigo: error.status,
+      mensagem: error.message,
+      timestamp: new Date().toISOString(),
+    })
   }
 }
