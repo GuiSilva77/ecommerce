@@ -5,13 +5,19 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_cartao').notNullable()
+      table.increments('id').notNullable()
       table.string('numero').notNullable()
       table.dateTime('validade').notNullable()
       table.string('cvv').notNullable()
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
-      table.integer('id_usuario').unsigned().references('id_usuario').inTable('usuario').onUpdate('CASCADE').onDelete('CASCADE')
+      table
+        .integer('usuario_id')
+        .unsigned()
+        .references('id')
+        .inTable('usuario')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
     })
   }
 

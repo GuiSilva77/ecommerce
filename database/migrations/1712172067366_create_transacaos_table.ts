@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_transacao').notNullable()
+      table.increments('id').notNullable()
       table.float('valor').notNullable()
       table.enum('tipo', ['CARTÃO', 'PIX', 'DINHEIRO']).notNullable()
       table.enum('status', ['PROCESSANDO', 'APROVADO', 'REPROVADO']).notNullable()

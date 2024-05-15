@@ -8,7 +8,7 @@ import Comerciante from './comerciante.js'
 
 export default class Pedido extends BaseModel {
   @column({ isPrimary: true })
-  declare ped_id: bigint
+  declare id: bigint
 
   @column()
   declare subtotal: number

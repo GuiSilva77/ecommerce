@@ -6,7 +6,7 @@ import Produto from './produto.js'
 
 export default class PedidoProduto extends BaseModel {
   @column({ isPrimary: true })
-  declare ped_prod_id: bigint
+  declare id: bigint
 
   @hasOne(() => Pedido)
   declare pedido: HasOne<typeof Pedido>

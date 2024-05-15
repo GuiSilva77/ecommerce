@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_saida_estoque').notNullable()
+      table.increments('id').notNullable()
       table.float('quantidade').notNullable()
       table.dateTime('data_lancto').notNullable()
       table.string('motivo').nullable()
@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.dateTime('data_mod').notNullable()
 
       table
-        .integer('id_produto')
+        .integer('produto_id')
         .unsigned()
         .references('id')
         .inTable('produtos')
@@ -21,9 +21,9 @@ export default class extends BaseSchema {
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
       table
-        .integer('id_venda')
+        .integer('venda_id')
         .unsigned()
-        .references('id_venda')
+        .references('id')
         .inTable('vendas')
         .nullable()
         .onUpdate('CASCADE')

@@ -16,9 +16,9 @@ export default class SessaoService {
   }
 
   async logout() {
-    const id_usuario = this.ctx.auth.user?.currentAccessToken.tokenableId
+    const id = this.ctx.auth.user?.currentAccessToken.tokenableId
 
-    const usuario = await Usuario.find(id_usuario)
+    const usuario = await Usuario.find(id)
     if (!usuario) {
       throw new ResourceNotFoundException('Usuário não encontrado')
     }

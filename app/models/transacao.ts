@@ -3,7 +3,7 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Transacao extends BaseModel {
   @column({ isPrimary: true })
-  declare trans_id: bigint
+  declare id: bigint
 
   @column()
   declare valor: number
