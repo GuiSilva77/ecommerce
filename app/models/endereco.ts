@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-import { EnumDeclaration } from 'typescript'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
+import Comerciante from './comerciante.js'
 
 export default class Endereco extends BaseModel {
   @column({ isPrimary: true })
-  declare end_id: bigint
+  declare id: bigint
 
   @column()
   declare rua: string
@@ -26,6 +27,9 @@ export default class Endereco extends BaseModel {
 
   @column()
   declare tipo: 'RESIDENCIAL' | 'COMERCIAL' | 'CASA' | 'TRABALHO'
+
+  @hasOne(() => Comerciante)
+  declare comerciante: HasOne<typeof Comerciante>
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare data_mod: DateTime

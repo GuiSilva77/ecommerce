@@ -1,5 +1,4 @@
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
-import Endereco from './endereco.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Telefone from './telefone.js'
 import { DateTime } from 'luxon'
@@ -45,9 +44,6 @@ export default class Usuario extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare senha: string
-
-  @hasMany(() => Endereco)
-  declare enderecos: HasMany<typeof Endereco>
 
   @hasMany(() => Telefone)
   declare telefones: HasMany<typeof Telefone>
