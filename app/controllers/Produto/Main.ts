@@ -32,7 +32,7 @@ export default class ProdutosController {
   async criarProduto({ request, response, auth }: HttpContext) {
     const dadosValidados = await request.validateUsing(criarValidador)
 
-    const id_comerciante: bigint | undefined = auth.user?.currentAccessToken.identifier
+    const id_comerciante = auth.user?.currentAccessToken.tokenableId as bigint
     const produto = await this.produtoService.criarProduto(id_comerciante, dadosValidados)
 
     return response.created(produto)
