@@ -11,7 +11,8 @@ export default class UsuariosController {
     let id: bigint
     const linhaDeBusca = request.only(['self'])
 
-    if (linhaDeBusca && linhaDeBusca.self == 'true') id = auth.getUserOrFail().id_usuario
+    if (linhaDeBusca && linhaDeBusca.self == 'true')
+      id = auth.getUserOrFail().currentAccessToken.tokenableId as bigint
     else id = request.param('id')
 
     const result = await this.usuarioService.encontrarPorId(id)
