@@ -8,7 +8,7 @@ export default class ProdutosController {
   constructor(protected produtoService: ProdutoService) {}
 
   async encontrarProdutoPorId({ request, response }: HttpContext) {
-    const id = parseInt(request.param('id'))
+    const id = request.param('id') as bigint
 
     const produto = await this.produtoService.encontrarProdutoPorId(id)
 

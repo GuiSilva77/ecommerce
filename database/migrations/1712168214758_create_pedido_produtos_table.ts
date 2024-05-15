@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
       table
-        .integer('id_produto')
+        .integer('produto_id')
         .unsigned()
         .references('id')
         .inTable('produtos')
@@ -18,7 +18,7 @@ export default class extends BaseSchema {
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
       table
-        .integer('id_pedido')
+        .integer('pedido_id')
         .unsigned()
         .references('id')
         .inTable('pedidos')

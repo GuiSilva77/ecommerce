@@ -8,11 +8,17 @@ export default class PedidoProduto extends BaseModel {
   @column({ isPrimary: true })
   declare id: bigint
 
+  @column()
+  declare pedidoId: bigint
+
+  @column()
+  declare produtoId: bigint
+
   @hasOne(() => Pedido)
   declare pedido: HasOne<typeof Pedido>
 
   @hasOne(() => Produto)
-  declare prod_id: HasOne<typeof Produto>
+  declare produto: HasOne<typeof Produto>
 
   @column()
   declare quantidade: number

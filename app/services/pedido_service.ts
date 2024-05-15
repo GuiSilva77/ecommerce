@@ -1,0 +1,96 @@
+import BadRequestException from '#exceptions/bad_request_exception'
+import ResourceNotFoundException from '#exceptions/resource_not_found_exception'
+import Pedido from '#models/pedido'
+import Usuario from '#models/usuario'
+import { DateTime } from 'luxon'
+import PedidoPayload from '../payloads/pedidoPayload.js'
+import PedidoPutPayload from '../payloads/pedidoPutPayload.js'
+
+export default class PedidoService {
+  async buscarPedidosPorComerciante(id_comerciante: number) {
+    let pedidos = await Pedido.query()
+      .join('venda', 'pedido.id', 'venda.id_pedido')
+      .where('venda.id_comerciante', id_comerciante)
+
+    return pedidos
+  }
+
+  async buscarPedidosPorUsuario(id: number, pagina: number, quantidade: number) {
+    pagina = pagina || 1
+    quantidade = quantidade || 10
+
+    let pedidos = await Pedido.query().where('id', id).paginate(pagina, quantidade)
+
+    return pedidos
+  }
+
+  async criarPedido(id: number, pedido: PedidoPayload) {
+    if (!pedido.produtos || pedido.produtos.length === 0) {
+      throw new BadRequestException('Pedido sem produtos')
+    }
+
+    let usuario = await Usuario.find(id)
+    if (!usuario) {
+      throw new ResourceNotFoundException('Usuário não encontrado')
+    }
+
+    let novoPedido = new Pedido()
+
+    novoPedido.obs = pedido.obs || ''
+    novoPedido.subtotal = pedido.subtotal
+    novoPedido.data_recebimento = DateTime.fromISO(pedido.data_recebimento.toISOString())
+    novoPedido.data_pedido = DateTime.now()
+
+    await novoPedido.related('usuario').associate(usuario)
+    await novoPedido.save()
+
+    await novoPedido.related('produto').createMany(
+      await Promise.all(
+        pedido.produtos.map(async (produto) => {
+          if (!produto.id_produto || !produto.quantidade) {
+            throw new BadRequestException('Produto sem id ou quantidade')
+          }
+
+          return {
+            produto_id: produto.id_produto,
+            quantidade: produto.quantidade,
+          }
+        })
+      )
+    )
+    return await novoPedido.load('produto')
+  }
+
+  async deletarPedido(id_pedido: number) {
+    const pedido = await Pedido.find(id_pedido)
+
+    if (!pedido) {
+      throw new ResourceNotFoundException('Pedido não encontrado')
+    }
+
+    await pedido.delete()
+  }
+
+  async atualizarPedido(id_pedido: number, pedido: PedidoPutPayload) {
+    const pedidoExistente = await Pedido.find(id_pedido)
+
+    if (!pedidoExistente) {
+      throw new ResourceNotFoundException('Pedido não encontrado')
+    }
+
+    pedidoExistente.merge(pedido)
+    await pedidoExistente.save()
+
+    return pedidoExistente
+  }
+
+  async buscarPedidoPorId(id_pedido: number) {
+    const pedido = await Pedido.query().where('id', id_pedido).first()
+
+    if (!pedido) {
+      throw new ResourceNotFoundException('Pedido não encontrado')
+    }
+
+    return pedido
+  }
+}

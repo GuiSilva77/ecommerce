@@ -10,7 +10,6 @@ export default class extends BaseSchema {
       table.dateTime('data_pedido').notNullable()
       table.dateTime('data_recebimento').nullable()
       table.string('obs').nullable()
-      table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
       table
         .integer('usuario_id')
