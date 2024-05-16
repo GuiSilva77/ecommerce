@@ -5,7 +5,7 @@ import Usuario from './usuario.js'
 
 export default class Cartao extends BaseModel {
   @column({ isPrimary: true })
-  declare car_id: bigint
+  declare id: bigint
 
   @column()
   declare numero: string

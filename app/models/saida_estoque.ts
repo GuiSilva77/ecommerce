@@ -7,7 +7,7 @@ import Venda from './venda.js'
 
 export default class SaidaEstoque extends BaseModel {
   @column({ isPrimary: true })
-  declare said_est_id: bigint
+  declare id: bigint
 
   @column()
   declare quantidade: number

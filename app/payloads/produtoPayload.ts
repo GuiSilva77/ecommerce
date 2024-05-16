@@ -6,5 +6,4 @@ export default class ProdutoPayload {
   declare img_url: string
   declare unidade: 'UN' | 'KG' | 'L' | 'M' | 'CM' | 'MM'
   declare categorias: { nome: string }[]
-  declare comerciante_id: number
 }

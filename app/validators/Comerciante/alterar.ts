@@ -1,6 +1,7 @@
 import vine from '@vinejs/vine'
 
 export const alteraComercianteValidador = vine.compile(vine.object({
+  razaoSocial: vine.string().maxLength(100).optional(),
   ativo: vine.boolean().optional(),
   email: vine.string().email().toLowerCase().trim().optional(),
   valor_min_entrega: vine.number().min(0).optional(),

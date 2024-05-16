@@ -1,9 +1,19 @@
-const ProdutosController = () => import('#controllers/produtos_controller')
-
+import ProdutosController from '#controllers/Produto/Main'
+import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
-router.get('/produto/:id', [ProdutosController, 'encontrarProdutoPorId'])
-router.get('/comerciante/:id/produtos', [ProdutosController, 'encontrarProdutos'])
-router.post('/produto', [ProdutosController, 'criarProduto'])
-router.patch('/produto/:id', [ProdutosController, 'atualizarProduto'])
-router.delete('/produto/:id', [ProdutosController, 'deletarProduto'])
+router.get('/produtos/:id', [ProdutosController, 'encontrarProdutoPorId'])
+router.get('/comerciantes/:id/produtos', [ProdutosController, 'encontrarProdutos'])
+router.get('/produtos/:id/categorias', [ProdutosController, 'listarCategoria'])
+
+router
+  .group(() => {
+    router.post('/produtos', [ProdutosController, 'criarProduto'])
+    router.put('/produtos/:id', [ProdutosController, 'atualizarProduto'])
+    router.delete('/produtos/:id', [ProdutosController, 'deletarProduto'])
+  })
+  .use(
+    middleware.auth({
+      guards: ['comerciante', 'usuario'],
+    })
+  )

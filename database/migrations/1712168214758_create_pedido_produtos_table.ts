@@ -5,10 +5,26 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_ped_produto').notNullable()
+      table.increments('id').notNullable()
       table.float('quantidade').notNullable()
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
+      table
+        .integer('produto_id')
+        .unsigned()
+        .references('id')
+        .inTable('produtos')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+      table
+        .integer('pedido_id')
+        .unsigned()
+        .references('id')
+        .inTable('pedidos')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
     })
   }
 

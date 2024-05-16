@@ -2,10 +2,10 @@ import Avaliacao from '#models/avaliacao'
 import db from '@adonisjs/lucid/services/db'
 
 export default class AvaliacaoService {
-  async encontrarPorComerciante_Id(id: number, pagina: number, quantidade: number) {
+  async encontrarPorid_comerciante(id: number, pagina: number, quantidade: number) {
     return await db
       .from('avaliacoes')
-      .where('comerciante_id', String(id))
+      .where('id_comerciante', id)
       .orderBy('data_mod', 'desc')
       .paginate(pagina, quantidade)
   }
@@ -14,7 +14,7 @@ export default class AvaliacaoService {
     return await Avaliacao.create(avaliacao)
   }
 
-  async atualizar(id: number, carga: Partial<Avaliacao>) {
+  async atualizar(id: bigint, carga: Partial<Avaliacao>) {
     if (carga.ava_id) {
       delete carga.ava_id
     }
@@ -30,7 +30,7 @@ export default class AvaliacaoService {
     return await avaliacao.save()
   }
 
-  async deletar(id: number) {
+  async deletar(id: bigint) {
     const avaliacao = await Avaliacao.findByOrFail('ava_id', id)
 
     return await avaliacao?.delete()

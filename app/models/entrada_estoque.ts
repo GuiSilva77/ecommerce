@@ -6,7 +6,7 @@ import Comerciante from './comerciante.js'
 
 export default class EntradaEstoque extends BaseModel {
   @column({ isPrimary: true })
-  declare ent_est_id: bigint
+  declare id: bigint
 
   @column()
   declare quantidade: number

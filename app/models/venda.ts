@@ -7,7 +7,7 @@ import Comerciante from './comerciante.js'
 
 export default class Venda extends BaseModel {
   @column({ isPrimary: true })
-  declare vend_id: bigint
+  declare id: bigint
 
   declare total: number
 

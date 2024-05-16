@@ -5,9 +5,15 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_telefone').notNullable()
+      table.increments('id')
       table.string('numero').notNullable()
       table.enum('tipo', ['CELULAR', 'FIXO']).notNullable()
+      table
+        .integer('usuario_id')
+        .unsigned()
+        .references('usuario.id')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.dateTime('data_mod').notNullable
       table.datetime('created_at')
     })

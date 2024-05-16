@@ -4,12 +4,18 @@ import Endereco from './endereco.js'
 import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import Telefone from './telefone.js'
 import Avaliacao from './avaliacao.js'
+import Produto from './produto.js'
+import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import { withAuthFinder } from '@adonisjs/auth'
+import hash from '@adonisjs/core/services/hash'
+import { compose } from '@adonisjs/core/helpers'
 
-export default class Comerciante extends BaseModel {
+const Authfinder = withAuthFinder(() => hash.use("scrypt"), {passwordColumnName: "senha", uids: ["cnpj"]})
+export default class Comerciante extends compose(BaseModel, Authfinder) {
   @column({ isPrimary: true })
-  declare com_id: bigint
+  declare id_comerciante: number
 
-  @column()
+  @column({columnName: "razaoSocial"})
   declare razaoSocial: string
 
   @column()
@@ -18,7 +24,7 @@ export default class Comerciante extends BaseModel {
   @column()
   declare banner_url: string
 
-  @column()
+  @column({serializeAs: null})
   declare cnpj: string
 
   @column()
@@ -30,7 +36,7 @@ export default class Comerciante extends BaseModel {
   @column()
   declare email: string
 
-  @column()
+  @column({serializeAs: null})
   declare senha: string
 
   @column()
@@ -42,12 +48,20 @@ export default class Comerciante extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare data_mod: DateTime
 
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare data_criacao: DateTime
+
   @hasOne(() => Endereco)
   declare enderecos: HasOne<typeof Endereco>
 
   @hasMany(() => Telefone)
   declare telefones: HasMany<typeof Telefone>
 
+  @hasMany(() => Produto)
+  declare produtos: HasMany<typeof Produto>
+
   @hasMany(() => Avaliacao)
   declare avaliacoes: HasMany<typeof Avaliacao>
+
+  static accessTokens = DbAccessTokensProvider.forModel(Comerciante, {table: "comerciante_auth_access_tokens"})
 }

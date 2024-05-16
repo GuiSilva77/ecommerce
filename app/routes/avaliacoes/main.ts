@@ -1,7 +1,7 @@
-const AvaliacoesController = () => import('#controllers/avaliacoes_controller')
+import AvaliacoesController from '#controllers/Avaliacao/Main'
 import router from '@adonisjs/core/services/router'
 
 router.get('/avaliacoes', [AvaliacoesController, 'encontrarAvaliacoesPaginadas'])
-router.post('/avaliacao', [AvaliacoesController, 'criarAvaliacao'])
-router.delete('/avaliacao', [AvaliacoesController, 'deletarAvaliacao'])
-router.patch('/avaliacao', [AvaliacoesController, 'atualizarAvaliacao'])
+router.post('/avaliacoes', [AvaliacoesController, 'criarAvaliacao'])
+router.delete('/avaliacoes', [AvaliacoesController, 'deletarAvaliacao'])
+router.patch('/avaliacoes', [AvaliacoesController, 'atualizarAvaliacao'])

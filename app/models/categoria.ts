@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
 
 export default class Categoria extends BaseModel {
   @column({ isPrimary: true })
-  declare cat_id: bigint
+  declare id: bigint
 
   @column()
   declare nome: string

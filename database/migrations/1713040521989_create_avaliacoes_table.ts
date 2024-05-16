@@ -5,17 +5,17 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('avaliacao_id').notNullable()
+      table.increments('id').notNullable()
       table.float('avaliacao').notNullable()
       table.string('conteudo').nullable()
       table.datetime('data_mod').notNullable()
       table.dateTime('data_criacao').notNullable()
       table
-        .integer('comerciante_id')
+        .integer('id_comerciante')
         .unsigned()
-        .references('comerciante.id_comerciante')
+        .references('comerciantes.id_comerciante')
         .onDelete('CASCADE')
-      table.integer('usuario_id').unsigned().references('usuario.usuario_id').onDelete('CASCADE')
+      table.integer('usuario_id').unsigned().references('usuario.id').onDelete('CASCADE')
     })
   }
 

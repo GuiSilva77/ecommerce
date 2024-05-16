@@ -7,10 +7,24 @@
 |
 */
 
-const UsuariosController = () => import('#controllers/usuarios_controller')
+import UsuariosController from '#controllers/Usuario/Main'
+import UsuarioAuthController from '#controllers/Usuario/Auth'
+import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
-router.get('/usuario/:id', [UsuariosController, 'findOne'])
-router.post('/usuario', [UsuariosController, 'criar'])
-router.delete('/usuario', [UsuariosController, 'deletar'])
-router.patch('/usuario', [UsuariosController, 'atualizar'])
+router.post('/usuarios', [UsuariosController, 'criar'])
+
+router
+  .group(() => {
+    router.get('/usuarios/:id', [UsuariosController, 'findOne'])
+    router.delete('/usuarios/:id', [UsuariosController, 'deletar'])
+    router.put('/usuarios/:id', [UsuariosController, 'atualizar'])
+    router.post('/usuarios/logout', [UsuarioAuthController, 'logout'])
+  })
+  .use(
+    middleware.auth({
+      guards: ['usuario'],
+    })
+  )
+
+router.post('/usuarios/token', [UsuarioAuthController, 'login'])
