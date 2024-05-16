@@ -8,7 +8,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class PedidosController {
   constructor(protected pedidoService: PedidoService) {}
 
-  async buscarPedidoPorId({ request, response, auth }: HttpContext) {
+  async buscarPedidoPorId({ request, response }: HttpContext) {
     const id = request.param('id')
     const resultado = await this.pedidoService.buscarPedidoPorId(id)
     return response.ok(resultado)

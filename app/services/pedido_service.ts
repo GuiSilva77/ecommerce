@@ -7,6 +7,17 @@ import PedidoPayload from '../payloads/pedidoPayload.js'
 import PedidoPutPayload from '../payloads/pedidoPutPayload.js'
 
 export default class PedidoService {
+  async buscarPedidoPorId(id_pedido: number) {
+    const pedido = await Pedido.find(id_pedido)
+
+    if (!pedido) {
+      throw new ResourceNotFoundException('Pedido não encontrado')
+    }
+
+    pedido.load('produto')
+    return pedido
+  }
+
   async buscarPedidosPorComerciante(id_comerciante: number) {
     let pedidos = await Pedido.query()
       .join('venda', 'pedido.id', 'venda.id_pedido')
@@ -82,15 +93,5 @@ export default class PedidoService {
     await pedidoExistente.save()
 
     return pedidoExistente
-  }
-
-  async buscarPedidoPorId(id_pedido: number) {
-    const pedido = await Pedido.query().where('id', id_pedido).first()
-
-    if (!pedido) {
-      throw new ResourceNotFoundException('Pedido não encontrado')
-    }
-
-    return pedido
   }
 }
