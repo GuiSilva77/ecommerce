@@ -87,7 +87,28 @@ export default class PedidoService {
       throw new ResourceNotFoundException('Pedido não encontrado')
     }
 
-    pedidoExistente.merge(pedido)
+    pedidoExistente.obs = pedido.obs || pedidoExistente.obs
+    pedidoExistente.subtotal = pedido.subtotal || pedidoExistente.subtotal
+
+    if (pedido.data_recebimento)
+      pedidoExistente.data_recebimento = DateTime.fromISO(pedido.data_recebimento.toISOString())
+
+    if (pedido.produtos)
+      pedidoExistente.related('produto').updateOrCreateMany(
+        await Promise.all(
+          pedido.produtos.map(async (produto) => {
+            if (!produto.id_produto || !produto.quantidade) {
+              throw new BadRequestException('Produto sem id ou quantidade')
+            }
+
+            return {
+              produto_id: produto.id_produto,
+              quantidade: produto.quantidade,
+            }
+          })
+        )
+      )
+
     await pedidoExistente.save()
 
     return pedidoExistente

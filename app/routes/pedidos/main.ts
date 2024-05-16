@@ -8,6 +8,7 @@ router
     router.get('/usuarios/:id/pedidos', [PedidosController, 'buscarPedidosPorUsuario'])
     router.post('/pedidos', [PedidosController, 'criarPedido'])
     router.delete('/pedidos/:id', [PedidosController, 'deletarPedido'])
+    router.put('/pedidos/:id', [PedidosController, 'atualizarPedido'])
   })
   .use(
     middleware.auth({
