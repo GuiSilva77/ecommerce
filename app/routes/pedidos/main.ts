@@ -13,3 +13,13 @@ router
       guards: ['usuario'],
     })
   )
+
+router
+  .group(() => {
+    router.get('/comerciantes/:id/pedidos', [PedidosController, 'buscarPedidosPorComerciante'])
+  })
+  .use(
+    middleware.auth({
+      guards: ['comerciante'],
+    })
+  )

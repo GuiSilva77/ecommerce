@@ -18,10 +18,17 @@ export default class PedidoService {
     return pedido
   }
 
-  async buscarPedidosPorComerciante(id_comerciante: number) {
-    let pedidos = await Pedido.query()
-      .join('venda', 'pedido.id', 'venda.id_pedido')
-      .where('venda.id_comerciante', id_comerciante)
+  async buscarPedidosPorComerciante(id_comerciante: number, pagina: number, quantidade: number) {
+    pagina = pagina || 1
+    quantidade = quantidade || 10
+
+    const pedidos = await Pedido.query()
+      .whereHas('produto', (query) => {
+        query.whereHas('produto', (query) => {
+          query.where('comerciante_id', id_comerciante)
+        })
+      })
+      .paginate(1, 10)
 
     return pedidos
   }
