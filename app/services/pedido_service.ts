@@ -76,7 +76,8 @@ export default class PedidoService {
         })
       )
     )
-    return await novoPedido.load('produto')
+    await novoPedido.load('produto')
+    return novoPedido
   }
 
   async deletarPedido(id_pedido: number) {
