@@ -14,4 +14,4 @@ Super Cart é um projeto de ecommerce de alimentos que tem como objetivo facilit
 
 - [Guilherme Silva](https://github.com/GuiSilva77)
 - [Luís Fernando Serafini](https://github.com/luisttkfps)
-- [Aldovani Henrique][https://github.com/aldovani]
+- [Aldovani Henrique](https://github.com/aldovani)
