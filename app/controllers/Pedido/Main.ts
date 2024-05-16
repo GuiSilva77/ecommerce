@@ -54,9 +54,9 @@ export default class PedidosController {
     return response.ok(resultado)
   }
 
-  async deletarPedido({ request, response, auth }: HttpContext) {
+  async deletarPedido({ request, response }: HttpContext) {
     const id = request.param('id')
-    const resultado = await this.pedidoService.deletarPedido(id)
-    return response.ok(resultado)
+    await this.pedidoService.deletarPedido(id)
+    return response.ok({ codigo: 200, mensagem: 'pedido deletado com sucesso' })
   }
 }

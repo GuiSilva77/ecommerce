@@ -80,16 +80,6 @@ export default class PedidoService {
     return novoPedido
   }
 
-  async deletarPedido(id_pedido: number) {
-    const pedido = await Pedido.find(id_pedido)
-
-    if (!pedido) {
-      throw new ResourceNotFoundException('Pedido não encontrado')
-    }
-
-    await pedido.delete()
-  }
-
   async atualizarPedido(id_pedido: number, pedido: PedidoPutPayload) {
     const pedidoExistente = await Pedido.find(id_pedido)
 
@@ -101,5 +91,15 @@ export default class PedidoService {
     await pedidoExistente.save()
 
     return pedidoExistente
+  }
+
+  async deletarPedido(id_pedido: number) {
+    const pedido = await Pedido.find(id_pedido)
+
+    if (!pedido) {
+      throw new ResourceNotFoundException('Pedido não encontrado')
+    }
+
+    await pedido.delete()
   }
 }
