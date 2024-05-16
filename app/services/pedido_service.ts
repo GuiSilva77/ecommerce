@@ -19,7 +19,7 @@ export default class PedidoService {
     pagina = pagina || 1
     quantidade = quantidade || 10
 
-    let pedidos = await Pedido.query().where('id', id).paginate(pagina, quantidade)
+    let pedidos = await Pedido.query().where('usuario_id', id).paginate(pagina, quantidade)
 
     return pedidos
   }

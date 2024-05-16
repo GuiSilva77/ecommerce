@@ -14,6 +14,19 @@ export default class PedidosController {
     return response.ok(resultado)
   }
 
+  async buscarPedidosPorUsuario({ request, response, auth }: HttpContext) {
+    const id_usuario = auth.getUserOrFail().currentAccessToken.tokenableId as number
+
+    const { pagina, quantidade } = request.only(['pagina', 'quantidade'])
+
+    const resultado = await this.pedidoService.buscarPedidosPorUsuario(
+      id_usuario,
+      pagina,
+      quantidade
+    )
+    return response.ok(resultado)
+  }
+
   async buscarPedidosPorComerciante({ request, response, auth }: HttpContext) {
     const id_comerciante = auth.getUserOrFail().currentAccessToken.tokenableId as number
     const resultado = await this.pedidoService.buscarPedidosPorComerciante(id_comerciante)
