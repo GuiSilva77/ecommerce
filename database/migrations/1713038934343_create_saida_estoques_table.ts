@@ -7,9 +7,10 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').notNullable()
       table.float('quantidade').notNullable()
-      table.dateTime('data_lancto').notNullable()
+      table.dateTime('data_lancamento').notNullable()
       table.string('motivo').nullable()
       table.dateTime('data_criacao').notNullable()
+      table.string('lote').notNullable()
       table.dateTime('data_mod').notNullable()
 
       table
@@ -17,6 +18,14 @@ export default class extends BaseSchema {
         .unsigned()
         .references('id')
         .inTable('produtos')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+      table
+        .integer('comerciante_id')
+        .unsigned()
+        .references('id_comerciante')
+        .inTable('comerciantes')
         .notNullable()
         .onUpdate('CASCADE')
         .onDelete('CASCADE')

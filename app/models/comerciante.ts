@@ -10,12 +10,15 @@ import { withAuthFinder } from '@adonisjs/auth'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 
-const Authfinder = withAuthFinder(() => hash.use("scrypt"), {passwordColumnName: "senha", uids: ["cnpj"]})
+const Authfinder = withAuthFinder(() => hash.use('scrypt'), {
+  passwordColumnName: 'senha',
+  uids: ['cnpj'],
+})
 export default class Comerciante extends compose(BaseModel, Authfinder) {
   @column({ isPrimary: true })
   declare id_comerciante: number
 
-  @column({columnName: "razaoSocial"})
+  @column({ columnName: 'razaoSocial' })
   declare razaoSocial: string
 
   @column()
@@ -24,7 +27,7 @@ export default class Comerciante extends compose(BaseModel, Authfinder) {
   @column()
   declare banner_url: string
 
-  @column({serializeAs: null})
+  @column({ serializeAs: null })
   declare cnpj: string
 
   @column()
@@ -36,7 +39,7 @@ export default class Comerciante extends compose(BaseModel, Authfinder) {
   @column()
   declare email: string
 
-  @column({serializeAs: null})
+  @column({ serializeAs: null })
   declare senha: string
 
   @column()
@@ -63,5 +66,7 @@ export default class Comerciante extends compose(BaseModel, Authfinder) {
   @hasMany(() => Avaliacao)
   declare avaliacoes: HasMany<typeof Avaliacao>
 
-  static accessTokens = DbAccessTokensProvider.forModel(Comerciante, {table: "comerciante_auth_access_tokens"})
+  static accessTokens = DbAccessTokensProvider.forModel(Comerciante, {
+    table: 'comerciante_auth_access_tokens',
+  })
 }
