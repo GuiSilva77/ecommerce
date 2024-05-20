@@ -1,32 +1,39 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import Transacao from './transacao.js'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
-import Pedido from './pedido.js'
-import Comerciante from './comerciante.js'
+import SaidaEstoque from './saida_estoque.js'
 
 export default class Venda extends BaseModel {
   @column({ isPrimary: true })
   declare id: bigint
 
+  @column()
   declare total: number
 
+  @column.dateTime()
   declare data_venda: DateTime
 
+  @column()
   declare descontos: number
 
-  @hasOne(() => Transacao)
-  declare transacao: HasOne<typeof Transacao>
+  @column({ columnName: 'transacao_id' })
+  declare transacaoId: number
 
-  @hasOne(() => Pedido)
-  declare pedido: HasOne<typeof Pedido>
+  @column({ columnName: 'pedido_id' })
+  declare pedidoId: number
 
-  @hasOne(() => Comerciante)
-  declare comerciante: HasOne<typeof Comerciante>
+  @column({ columnName: 'comerciante_id' })
+  declare comercianteId: number
+
+  @column()
+  declare saidaEstoqueId: number | null
+
+  @hasOne(() => SaidaEstoque)
+  declare saida_estoques: HasOne<typeof SaidaEstoque>
 
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare data_criacao: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  declare data_mod: DateTime
 }
