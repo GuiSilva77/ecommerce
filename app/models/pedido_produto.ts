@@ -9,10 +9,10 @@ export default class PedidoProduto extends BaseModel {
   declare id: bigint
 
   @column()
-  declare pedidoId: bigint
+  declare pedidoId: number
 
   @column()
-  declare produtoId: bigint
+  declare produtoId: number
 
   @hasOne(() => Pedido)
   declare pedido: HasOne<typeof Pedido>

@@ -65,10 +65,12 @@ export default class EstoqueService {
         ? await SaidaEstoque.query()
             .where('comerciante_id', comerciante_id)
             .whereIn('produto_id', produtoIds)
+            .whereNot('motivo', 'VENDA')
             .orderBy('data_criacao', 'desc')
             .paginate(pagina, quantidade)
         : await SaidaEstoque.query()
             .where('comerciante_id', comerciante_id)
+            .whereNot('motivo', 'VENDA')
             .orderBy('data_criacao', 'desc')
             .paginate(pagina, quantidade)
 

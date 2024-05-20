@@ -42,7 +42,7 @@ export default class Usuario extends compose(BaseModel, AuthFinder) {
   @column()
   declare validado: boolean
 
-  @column()
+  @column({ serializeAs: null })
   declare senha: string
 
   @hasMany(() => Telefone)

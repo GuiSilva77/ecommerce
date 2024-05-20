@@ -17,7 +17,7 @@ export default class extends BaseSchema {
         .unsigned()
         .references('id')
         .inTable('transacaos')
-        .notNullable()
+        .nullable()
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
       table
@@ -25,6 +25,15 @@ export default class extends BaseSchema {
         .unsigned()
         .references('id')
         .inTable('pedidos')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+
+      table
+        .integer('comerciante_id')
+        .unsigned()
+        .references('id_comerciante')
+        .inTable('comerciantes')
         .notNullable()
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
