@@ -5,15 +5,38 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_saida_estoque').notNullable()
+      table.increments('id').notNullable()
       table.float('quantidade').notNullable()
-      table.dateTime('data_lancto').notNullable()
+      table.dateTime('data_lancamento').notNullable()
       table.string('motivo').nullable()
       table.dateTime('data_criacao').notNullable()
+      table.string('lote').notNullable()
       table.dateTime('data_mod').notNullable()
 
-      table.integer('id_produto').unsigned().references('id_produto').inTable('produtos').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
-      table.integer('id_venda').unsigned().references('id_venda').inTable('vendas').nullable().onUpdate('CASCADE').onDelete('CASCADE')
+      table
+        .integer('produto_id')
+        .unsigned()
+        .references('id')
+        .inTable('produtos')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+      table
+        .integer('comerciante_id')
+        .unsigned()
+        .references('id_comerciante')
+        .inTable('comerciantes')
+        .notNullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+      table
+        .integer('venda_id')
+        .unsigned()
+        .references('id')
+        .inTable('vendas')
+        .nullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
     })
   }
 

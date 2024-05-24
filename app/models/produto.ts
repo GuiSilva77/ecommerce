@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany, hasOne, manyToMany } from '@adonisjs/lucid/orm'
 import Categoria from './categoria.js'
-import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany, HasOne, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Comerciante from './comerciante.js'
 
 export default class Produto extends BaseModel {
   @column({ isPrimary: true })
-  declare prod_id: bigint
+  declare id: bigint
 
   @column()
   declare nome: string
@@ -26,11 +26,20 @@ export default class Produto extends BaseModel {
   @column()
   declare unidade: 'UN' | 'KG' | 'L' | 'M' | 'CM' | 'MM'
 
-  @hasOne(() => Comerciante)
-  declare comerciante: HasOne<typeof Comerciante>
+  @column({ columnName: 'id_comerciante' })
+  declare id_comerciante: bigint
 
-  @hasMany(() => Categoria)
-  declare categorias: HasMany<typeof Categoria>
+  @belongsTo(() => Comerciante, {
+    foreignKey: 'id_comerciante',
+  })
+  declare comerciante: BelongsTo<typeof Comerciante>
+
+  @manyToMany(() => Categoria, {
+    pivotTable: 'produto_categorias',
+    pivotForeignKey: 'produto_id',
+    pivotRelatedForeignKey: 'categoria_id',
+  })
+  declare categorias: ManyToMany<typeof Categoria>
 
   @column.dateTime({ autoCreate: true })
   declare data_criacao: DateTime

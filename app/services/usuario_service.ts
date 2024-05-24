@@ -13,7 +13,7 @@ export default class UsuarioService {
   constructor(protected telefoneService: TelefoneService) {}
 
   async encontrarPorId(id: bigint | undefined) {
-    const usuario = await Usuario.findBy('id_usuario', id)
+    const usuario = await Usuario.findBy('id', id)
 
     if (!usuario) {
       throw new ResourceNotFoundException('Usuário não encontrado')
@@ -32,7 +32,7 @@ export default class UsuarioService {
     }
 
     let novoUsuario = new Usuario().merge(usuario)
-    novoUsuario.related('telefones').createMany(usuario.telefones)
+    await novoUsuario.related('telefones').createMany(usuario.telefones)
 
     novoUsuario.ativo = true
     novoUsuario.validado = false
@@ -41,7 +41,7 @@ export default class UsuarioService {
   }
 
   async atualizar(id: bigint, carga: UsuarioPutPayload) {
-    const usuario = await Usuario.findBy('id_usuario', id)
+    const usuario = await Usuario.findBy('id', id)
 
     if (!usuario) {
       throw new ResourceNotFoundException('Usuário não encontrado')
@@ -52,7 +52,7 @@ export default class UsuarioService {
   }
 
   async deletar(id: bigint) {
-    const usuario = await Usuario.findBy('id_usuario', id)
+    const usuario = await Usuario.findBy('id', id)
 
     if (!usuario) {
       throw new ResourceNotFoundException('Usuário não encontrado')

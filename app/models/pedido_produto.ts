@@ -6,13 +6,19 @@ import Produto from './produto.js'
 
 export default class PedidoProduto extends BaseModel {
   @column({ isPrimary: true })
-  declare ped_prod_id: bigint
+  declare id: bigint
+
+  @column()
+  declare pedidoId: number
+
+  @column()
+  declare produtoId: number
 
   @hasOne(() => Pedido)
   declare pedido: HasOne<typeof Pedido>
 
   @hasOne(() => Produto)
-  declare prod_id: HasOne<typeof Produto>
+  declare produto: HasOne<typeof Produto>
 
   @column()
   declare quantidade: number

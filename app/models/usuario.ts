@@ -1,5 +1,4 @@
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
-import Endereco from './endereco.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Telefone from './telefone.js'
 import { DateTime } from 'luxon'
@@ -17,7 +16,7 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
 export default class Usuario extends compose(BaseModel, AuthFinder) {
   static table = 'usuario'
   @column({ isPrimary: true })
-  declare id_usuario: bigint
+  declare id: bigint
 
   @column()
   declare nome: string
@@ -43,11 +42,8 @@ export default class Usuario extends compose(BaseModel, AuthFinder) {
   @column()
   declare validado: boolean
 
-  @column()
+  @column({ serializeAs: null })
   declare senha: string
-
-  @hasMany(() => Endereco)
-  declare enderecos: HasMany<typeof Endereco>
 
   @hasMany(() => Telefone)
   declare telefones: HasMany<typeof Telefone>

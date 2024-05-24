@@ -1,34 +1,36 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
-import Produto from './produto.js'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Comerciante from './comerciante.js'
 
 export default class EntradaEstoque extends BaseModel {
   @column({ isPrimary: true })
-  declare ent_est_id: bigint
+  declare id: bigint
 
   @column()
   declare quantidade: number
 
-  @column()
+  @column.dateTime()
   declare data_lancamento: DateTime
 
-  @hasOne(() => Produto)
-  declare produto: HasOne<typeof Produto>
+  @column({ columnName: 'produto_id' })
+  declare produtoId: number
 
-  @hasOne(() => Comerciante)
-  declare comerciante: HasOne<typeof Comerciante>
+  @column({ columnName: 'comerciante_id' })
+  declare comercianteIdComerciante: number
 
-  @column()
+  @belongsTo(() => Comerciante)
+  declare comerciante: BelongsTo<typeof Comerciante>
+
+  @column.dateTime()
   declare validade: DateTime
 
   @column()
   declare lote: string
 
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare data_criacao: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  declare data_mod: DateTime
 }
