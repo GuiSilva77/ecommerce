@@ -14,5 +14,15 @@ export default class AuthComercianteController {
 
     return result
   }
+
+  public async deletar({ auth, response }: HttpContext){
+    const comerciante = auth.use('comerciante').user
+
+    if (!comerciante) return
+
+    await this.comercianteService.delete(comerciante)
+
+    return response.status(200).send('Sessão finalizada')
+  }
 }
 //cnpj 22071709000110

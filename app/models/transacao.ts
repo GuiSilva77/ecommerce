@@ -3,7 +3,7 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Transacao extends BaseModel {
   @column({ isPrimary: true })
-  declare id: bigint
+  declare id: number
 
   @column()
   declare valor: number
@@ -13,6 +13,11 @@ export default class Transacao extends BaseModel {
 
   @column()
   declare status: 'PROCESSANDO' | 'APROVADO' | 'REPROVADO'
+
+  @column({
+    columnName: 'venda_id',
+  })
+  declare vendaId: number
 
   @column.dateTime({ autoCreate: true })
   declare data_criacao: DateTime

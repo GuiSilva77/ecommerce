@@ -17,7 +17,7 @@ export default class Venda extends BaseModel {
   declare descontos: number
 
   @column({ columnName: 'transacao_id' })
-  declare transacaoId: number
+  declare transacaoId: number | null
 
   @column({ columnName: 'pedido_id' })
   declare pedidoId: number

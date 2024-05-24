@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.datetime('data_mod').notNullable()
       table.dateTime('data_criacao').notNullable()
       table
-        .integer('id_comerciante')
+        .integer('comerciante_id')
         .unsigned()
         .references('comerciantes.id_comerciante')
         .onDelete('CASCADE')

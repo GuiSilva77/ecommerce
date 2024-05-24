@@ -7,6 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id_comerciante').primary().notNullable()
       table.string('razaoSocial').nullable()
+      table.string('nomeFantasia').nullable()
       table.string('logo_url').nullable()
       table.string('banner_url').nullable()
       table.string('cnpj').notNullable()

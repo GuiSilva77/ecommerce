@@ -11,15 +11,6 @@ export default class extends BaseSchema {
       table.float('descontos').notNullable()
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
-
-      table
-        .integer('transacao_id')
-        .unsigned()
-        .references('id')
-        .inTable('transacaos')
-        .nullable()
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE')
       table
         .integer('pedido_id')
         .unsigned()
