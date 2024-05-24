@@ -20,6 +20,16 @@ export default class extends BaseSchema {
       table.dateTime('data_criacao').notNullable()
       table.dateTime('data_mod').notNullable()
     })
+    this.schema.alterTable('vendas', (table) => {
+      table
+        .integer('transacao_id')
+        .unsigned()
+        .references('id')
+        .inTable('transacaos')
+        .nullable()
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+    })
   }
 
   async down() {
