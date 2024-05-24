@@ -34,4 +34,15 @@ export class ComecianteLucidRepository implements IComerciante {
 
     await comerciante.delete()
   }
+
+  async updateImage(payload: { tipoImagem: 'LOGO' | 'BANNER'; path: string; id: number }): Promise<void> {
+      if(payload.tipoImagem === 'LOGO'){
+        const logoPayload = {logo_url: payload.path}
+        const comerciante = Comerciante.query().where('id_comerciante', payload.id).update(logoPayload)
+        return
+      }
+      const bannerPayload = {banner_url: payload.path}
+      const comerciante = Comerciante.query().where('id_comerciante', payload.id).update(bannerPayload)
+      return     
+  }
 }
