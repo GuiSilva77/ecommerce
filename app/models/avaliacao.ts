@@ -1,8 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import Comerciante from './comerciante.js'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column, hasOne } from '@adonisjs/lucid/orm'
 import Usuario from './usuario.js'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Avaliacao extends BaseModel {
   @column({ isPrimary: true })
@@ -14,11 +13,18 @@ export default class Avaliacao extends BaseModel {
   @column()
   declare conteudo: string
 
-  @hasOne(() => Comerciante)
-  declare comerciante: HasOne<typeof Comerciante>
+  @column({
+    columnName: 'usuario_id',
+  })
+  declare usuarioId: number
 
-  @hasOne(() => Usuario)
-  declare criador: HasOne<typeof Usuario>
+  @belongsTo(() => Usuario)
+  declare criador: BelongsTo<typeof Usuario>
+
+  @column({
+    columnName: 'comerciante_id',
+  })
+  declare comercianteId: number
 
   @column.dateTime({ autoCreate: true })
   declare data_criacao: DateTime

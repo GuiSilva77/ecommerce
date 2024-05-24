@@ -1,38 +1,69 @@
+import BadRequestException from '#exceptions/bad_request_exception'
+import ResourceNotFoundException from '#exceptions/resource_not_found_exception'
 import Avaliacao from '#models/avaliacao'
-import db from '@adonisjs/lucid/services/db'
+import Usuario from '#models/usuario'
+
+type AvaliacaoPayload = {
+  avaliacao: number
+  conteudo: string
+  comercianteId: number
+}
+
+type AvaliacaoPutPayload = Partial<AvaliacaoPayload>
 
 export default class AvaliacaoService {
-  async encontrarPorid_comerciante(id: number, pagina: number, quantidade: number) {
-    return await db
-      .from('avaliacoes')
-      .where('id_comerciante', id)
-      .orderBy('data_mod', 'desc')
+  async buscarAvaliacoesPorUsuarioId(id: number, pagina: number, quantidade: number) {
+    pagina = pagina || 1
+    quantidade = quantidade || 10
+
+    const avaliacoes = await Avaliacao.query().where('usuario_id', id).paginate(pagina, quantidade)
+
+    return avaliacoes
+  }
+
+  async buscarAvaliacoesPorComercianteId(id: number, pagina: number, quantidade: number) {
+    pagina = pagina || 1
+    quantidade = quantidade || 10
+
+    const avaliacoes = await Avaliacao.query()
+      .where('comerciante_id', id)
       .paginate(pagina, quantidade)
+
+    return avaliacoes
   }
 
-  async criarAvaliacao(avaliacao: Partial<Avaliacao>) {
-    return await Avaliacao.create(avaliacao)
+  async criarAvaliacao(id_usuario: number, payload: AvaliacaoPayload) {
+    const usuario = await Usuario.find(id_usuario)
+
+    if (!usuario) throw new BadRequestException('Usuário não validado')
+
+    let novaAvaliacao = new Avaliacao().merge(payload)
+
+    await novaAvaliacao.save()
+    await novaAvaliacao.related('criador').associate(usuario)
+
+    return novaAvaliacao
   }
 
-  async atualizar(id: bigint, carga: Partial<Avaliacao>) {
-    if (carga.ava_id) {
-      delete carga.ava_id
-    }
+  async atualizarAvaliacao(id_usuario: number, id_avaliacao: number, payload: AvaliacaoPutPayload) {
+    const avaliacao = await Avaliacao.find(id_avaliacao)
 
-    const avaliacao = await Avaliacao.findBy('ava_id', id)
+    if (!avaliacao || avaliacao.usuarioId != id_usuario)
+      throw new ResourceNotFoundException('Avaliacao não encontrada')
 
-    if (!avaliacao) {
-      return null
-    }
+    avaliacao.merge(payload)
 
-    avaliacao.merge(carga)
+    await avaliacao.save()
 
-    return await avaliacao.save()
+    return avaliacao
   }
 
-  async deletar(id: bigint) {
-    const avaliacao = await Avaliacao.findByOrFail('ava_id', id)
+  async deletarAvaliacao(id_avaliacao: number, id_usuario: number) {
+    const avaliacao = await Avaliacao.find(id_avaliacao)
 
-    return await avaliacao?.delete()
+    if (!avaliacao || avaliacao.usuarioId != id_usuario)
+      throw new ResourceNotFoundException('Avaliacao não encontrada')
+
+    await avaliacao.delete()
   }
 }
