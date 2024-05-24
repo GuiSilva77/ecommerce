@@ -6,6 +6,6 @@ export default class AlreadyExistsException extends Exception {
   static code = 'ALREADY_EXISTS'
 
   async handle(error: this, ctx: HttpContext) {
-    ctx.response.status(error.status).send(error.message)
+    ctx.response.status(error.status).send({code: error.code, status: error.status, message: error.message})
   }
 }

@@ -7,6 +7,12 @@ type createComerciante = {
   senha: string
 }
 
+type imageComerciante = {
+  tipoImagem: 'LOGO' | 'BANNER';
+  path: string
+  id: number
+}
+
 export interface IComerciante {
   findByCNPJ(cnpj: string): Promise<Comerciante | null>
 
@@ -17,4 +23,6 @@ export interface IComerciante {
   update(payload: updateComerciante, id: number): Promise<Comerciante>
 
   delete(id: number): Promise<void>
+
+  updateImage(payload: imageComerciante): Promise<void>
 }

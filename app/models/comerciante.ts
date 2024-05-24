@@ -18,6 +18,9 @@ export default class Comerciante extends compose(BaseModel, Authfinder) {
   @column({columnName: "razaoSocial"})
   declare razaoSocial: string
 
+  @column({columnName: "nomeFantasia"})
+  declare nomeFantasia: string
+
   @column()
   declare logo_url: string
 
